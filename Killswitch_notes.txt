@@ -43,4 +43,7 @@ sudo ufw allow out on tun0 from any to any
 /etc/init.d/network-manager restart
 
 # connect to vpn !
-sudo openvpn --config US_Seattle.ovpn --auth-user-pass up
+
+# Credit to: 
+# https://www.reddit.com/user/DefinitelyNotInsane
+# https://www.reddit.com/r/VPN/comments/3z7ke3/this_is_my_killswitch_script_for_linux_using/
