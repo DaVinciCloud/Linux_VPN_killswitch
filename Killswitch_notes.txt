@@ -30,7 +30,7 @@ sudo ifconfig wlan0 up # use "wlp2s0" for new linux network protocol
 
 # Allow VPN to stablish connection
 # Use the port and protocol provided by your VPN 
-sudo ufw allow out 1194/udp
+sudo ufw allow out 53/udp
 
 # Allow VPN connection
 sudo ufw allow in from 172.111.136.225 to any
