@@ -1,0 +1,46 @@
+# take all connections down as a precaution before resetting ufw
+sudo ifconfig eth0 down  # use "enp3s0" for new network protocol 
+sudo ifconfig wlan0 down # use "wlp2s0" for new network protocol
+
+# Reset ufw settings
+# WARNING ! This will reset any previus settings
+# This is a good way to start from scratch
+# Use this command only if you know what you are doing !
+sudo ufw --force reset
+
+# Set Default behaviour of UFW
+# This is part of the Kill Switch
+# Block any and all incoming and outgoing connections
+# when the VPN is not Runnning or when it Drops connection
+sudo ufw default deny incoming
+sudo ufw default deny outgoing
+
+# Enable UFW firewall
+sudo ufw enable
+
+# Local Traffic (OPTIONAL)
+# This will allow internal connections between the computers
+# in your LAN 
+sudo ufw allow to 192.168.0.1/24
+sudo ufw allow in from 192.168.0.1/24
+
+# Bring connections back up
+sudo ifconfig etch0 up # use "enp3s0" for new linux network protocol
+sudo ifconfig wlan0 up # use "wlp2s0" for new linux network protocol
+
+# Allow VPN to stablish connection
+# Use the port and protocol provided by your VPN 
+sudo ufw allow out 1194/udp
+
+# Allow VPN connection
+sudo ufw allow in from 172.111.136.225 to any
+
+# Allow all traffic over VPN interface
+sudo ufw allow in on tun0 from any to any
+sudo ufw allow out on tun0 from any to any
+
+# Reset Network-manager for configuration to take effect
+/etc/init.d/network-manager restart
+
+# connect to vpn !
+sudo openvpn --config US_Seattle.ovpn --auth-user-pass up
